@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 ### Data File Preparation
 # reads the data file and stores it in the variable "raw_data"
@@ -27,7 +28,7 @@ def exist_information(plant_name):
 def combined_eponomy_information():
     if len(connected_entries) == 1:
         return eponomy_information()
-    elif (connected_entries['genus-name'].nunique()==1 and connected_entries['eponymy-yob'].nunique()==1): # Hier könnte ich auch alle einzelnen angeben, wenns mich freut
+    elif (connected_entries['genus-name'].nunique()==1 and connected_entries['eponymy-yob'].nunique()==1): # Hier könnte man auch alle einzelnen angeben, wenns uns freut
         return eponomy_information()
     else:
         return 'The different plants come from different women with the same name. To the first woman in the list, the following information is aviable: ' + eponomy_information() # Mögliche Erweiterung: tatsächlich einzeln nennen
@@ -59,7 +60,31 @@ def indiv_exist_information(row_data, number):
     string = f'Entry number {number} belongs to the wfo-family of the {row_data["family-name-wfo"]}. Its wfo-Status is: {row_data["genus-wfo-status"]}'
     return string
 
-print(plant_information(plant_name))
+def plot_visualization():
+    if connected_entries['eponymy-is-real'].iloc[0]:
+        plot_country_visualization()
+    else:
+        plot_category_visualization()
 
+def plot_country_visualization(): # not exactly the plot we want to include, this needs way more looping etc => change
+    country_counts = connected_entries['eponymy-country'].value_counts()
+    country_counts.plot(kind='bar', color='skyblue')
+    plt.title('Plants Named After Real People - Country Visualization')
+    plt.xlabel('Country')
+    plt.ylabel('Number of Plants')
+    plt.show()
+
+def plot_category_visualization(): # not exactly the plot we want to include, this needs way more looping etc => change
+    category_counts = connected_entries['eponymy-occupation'].value_counts()
+    category_counts.plot(kind='bar', color='lightcoral')
+    plt.title('Plants Named After Mythical/Fictional Characters - Category Visualization')
+    plt.xlabel('Category')
+    plt.ylabel('Number of Plants')
+    plt.show()
+
+result = plant_information(plant_name)
+
+if not connected_entries.empty:
+    plot_visualization()
 # diagram idea: are more plants named after her (needs: eponymy name, yob and yod)
 # diagram idea: if is-real = true => Country visualization
