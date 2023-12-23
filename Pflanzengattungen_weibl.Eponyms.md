@@ -37,7 +37,6 @@ Datenanalyse – richtig – wurde nach einer Frau benannt (Name) UND es gibt ev
 # Randomnumber zur Auswahl einer Array-Stelle; der Pflanzenname dort wird ausgegeben mit der Frage, zu welcher Kategorie das gehört
 # Ausgabe am Ende: Text (mit Entscheidung, ob Eingabe richtig war); Diagramm/Infos zur Person, die hinter dem eponym steht
 
-
 Data file in Zenodo:
 https://zenodo.org/records/10038070
 Publikation:
