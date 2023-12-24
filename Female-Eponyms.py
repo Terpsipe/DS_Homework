@@ -55,31 +55,60 @@ def combined_exist_informations():
     
     return string
 
-# evtl mit nummerierung durchschicken?
+# provides a textual information about one specific entry
 def indiv_exist_information(row_data, number):
     string = f'Entry number {number} belongs to the wfo-family of the {row_data["family-name-wfo"]}. Its wfo-Status is: {row_data["genus-wfo-status"]}'
     return string
 
+# 
 def plot_visualization():
     if connected_entries['eponymy-is-real'].iloc[0]:
-        plot_country_visualization()
+        target_country = connected_entries['eponymy-country'].iloc[0]  # Get the target country from the data
+        plot_country_visualization(target_country)
     else:
-        plot_category_visualization()
+        target_occupation = connected_entries['eponymy-occupation'].iloc[0]
+        plot_category_visualization(target_occupation)
 
-def plot_country_visualization(): # not exactly the plot we want to include, this needs way more looping etc => change
-    country_counts = connected_entries['eponymy-country'].value_counts()
-    country_counts.plot(kind='bar', color='skyblue')
+def plot_country_visualization(target_country):
+    # Count occurrences of the target country
+    target_count = (selected_data['eponymy-country'] == target_country).sum()
+    
+    # Count occurrences of all other countries
+    other_countries_count = (selected_data['eponymy-country'] != target_country).sum()
+
+    # Create a DataFrame with the counts
+    visualization_data = pd.DataFrame({
+        'Country': [target_country, 'Other Countries'],
+        'Count': [target_count, other_countries_count]
+    })
+
+    # Plot a pie chart
+    visualization_data.plot(kind='pie', y='Count', labels=visualization_data['Country'],
+                            autopct='%1.1f%%', colors=['skyblue', 'lightcoral'], startangle=90)
+    
     plt.title('Plants Named After Real People - Country Visualization')
-    plt.xlabel('Country')
-    plt.ylabel('Number of Plants')
-    plt.show()
+    plt.ylabel('')  # Remove y-axis label for better presentation
+    plt.show()  
 
-def plot_category_visualization(): # not exactly the plot we want to include, this needs way more looping etc => change
-    category_counts = connected_entries['eponymy-occupation'].value_counts()
-    category_counts.plot(kind='bar', color='lightcoral')
+def plot_category_visualization(target_occupation):
+    # Count occurrences of the target occupation
+    target_count = (selected_data['eponymy-occupation'] == target_occupation).sum()
+    
+    # Count occurrences of all other occupations
+    other_occupations_counts = selected_data['eponymy-occupation'].value_counts()
+    
+     # Create a DataFrame with the counts
+    visualization_data = pd.DataFrame({
+        'Occupation': [target_occupation, 'Other Occupations'],
+        'Count': [target_count, other_occupations_counts.sum()]
+    })
+    
+    # Plot a pie chart
+    visualization_data.plot(kind='pie', y='Count', labels=visualization_data['Occupation'], autopct='%1.1f%%', colors=['skyblue', 'lightcoral'], startangle=90)
+    
     plt.title('Plants Named After Mythical/Fictional Characters - Category Visualization')
     plt.xlabel('Category')
-    plt.ylabel('Number of Plants')
+    plt.ylabel('Other creatures')
     plt.show()
 
 result = plant_information(plant_name)
