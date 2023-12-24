@@ -1,119 +1,94 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-### Data File Preparation
-# reads the data file and stores it in the variable "raw_data"
+# Data File Preparation
 raw_data = pd.read_csv('WomenPlantGenera_v1-3.csv')
 
-# stores just the rows we want: [id, genus-name (name to be searched by), genus-wfo-status (Accepted, Unplaced, Synonym for XY), family-name-wfo (plant family name), eponymy-name (named after whom), eponymy-yob (birthyear of person), eponymy-yod (deathyear of person), eponomy-occupation, eponymy-is-real, eponymy-country]
-selected_data = raw_data[['id', 'genus-name', 'genus-wfo-status', 'family-name-wfo', 'eponymy-name', 'eponymy-yob', 'eponymy-yod', 'eponymy-occupation', 'eponymy-is-real', 'eponymy-country']]
+# Selecting relevant columns
+selected_data = raw_data[['genus-name', 'genus-wfo-status', 'family-name-wfo', 'eponymy-name', 'eponymy-yob', 'eponymy-yod', 'eponymy-occupation', 'eponymy-is-real', 'eponymy-country']]
 
-# gets the user input
+# Get user input
 plant_name = input('Please enter the plant name you want to check: ')
 
-# gives out a series of all the entries that have plant_name as genus-name
+# Filter entries based on user input
 connected_entries = selected_data[selected_data['genus-name']==plant_name]
 
+# Function to display plant information
 def plant_information(plant_name):
     if connected_entries.empty:
         print(f'The plant name "{plant_name}" does not exist in the selected data.')
     else:
         print(exist_information(plant_name))
        
-# returns more information about the plant the user was searching for
+# Function to return detailed information about the plant
 def exist_information(plant_name):
-    string = str(f'The plant name "{plant_name}" exists in the selected data. It has {len(connected_entries)} results: \n') + combined_eponomy_information() + combined_exist_informations()
-    return string
+    return f'The plant name "{plant_name}" exists in the selected data. It has {len(connected_entries)} result(s):\n{combined_eponomy_information()}{combined_exist_informations()}'
 
+# Function to return combined eponomy information
 def combined_eponomy_information():
-    if len(connected_entries) == 1:
-        return eponomy_information()
-    elif (connected_entries['genus-name'].nunique()==1 and connected_entries['eponymy-yob'].nunique()==1): # Hier könnte man auch alle einzelnen angeben, wenns uns freut
+    if (len(connected_entries) == 1) or (connected_entries['genus-name'].nunique()==1 and connected_entries['eponymy-yob'].nunique()==1):
         return eponomy_information()
     else:
-        return 'The different plants come from different women with the same name. To the first woman in the list, the following information is aviable: ' + eponomy_information() # Mögliche Erweiterung: tatsächlich einzeln nennen
-    
-def eponomy_information():
-    string = f'The flowers namesake is {connected_entries["eponymy-name"].iloc[0]}. She ' + reality_information()
-    return string
+        return f'The different plants come from different women with the same name. To the first woman in the list, the following information is aviable: {eponomy_information()}' #### Mögliche Erweiterung: tatsächlich einzeln nennen ###
 
+# Function to return one eponomy information
+def eponomy_information():
+    return f'The flowers namesake is {connected_entries["eponymy-name"].iloc[0]}. She {reality_information()}'
+    
+# Function to return further information depending on whether namesake was a real person or not
 def reality_information():
     if connected_entries['eponymy-is-real'].iloc[0]:
         return f'was a {connected_entries["eponymy-occupation"].iloc[0]} and lived from {connected_entries["eponymy-yob"].iloc[0]} to {connected_entries["eponymy-yod"].iloc[0]} in {connected_entries["eponymy-country"].iloc[0]}. \n'
     else:
         return f'is a {connected_entries["eponymy-occupation"].iloc[0]}. \n'
 
-# sends the individual rows to indiv_exist_information(row_data) in order to be processed 
+# Function to return combined information for each entry
 def combined_exist_informations():
     individual_rows = []
-    
     for i, (index, row) in enumerate(connected_entries.iterrows(), start = 1):
         row_info = indiv_exist_information(row, i)
         individual_rows.append(row_info)
-    
-    string = '\n'.join(individual_rows)
-    
-    return string
+    return '\n'.join(individual_rows)
 
-# provides a textual information about one specific entry
+# Function to return information for each entry
 def indiv_exist_information(row_data, number):
-    string = f'Entry number {number} belongs to the wfo-family of the {row_data["family-name-wfo"]}. Its wfo-Status is: {row_data["genus-wfo-status"]}'
-    return string
+    return f'Entry number {number} belongs to the wfo-family of the {row_data["family-name-wfo"]}. Its wfo-Status is: {row_data["genus-wfo-status"]}'
 
-# 
+# Function to plot visualization
 def plot_visualization():
     if connected_entries['eponymy-is-real'].iloc[0]:
-        target_country = connected_entries['eponymy-country'].iloc[0]  # Get the target country from the data
+        target_country = connected_entries['eponymy-country'].iloc[0]
         plot_country_visualization(target_country)
     else:
         target_occupation = connected_entries['eponymy-occupation'].iloc[0]
         plot_category_visualization(target_occupation)
 
+# Function to plot country visualization
 def plot_country_visualization(target_country):
-    # Count occurrences of the target country
     target_count = (selected_data['eponymy-country'] == target_country).sum()
-    
-    # Count occurrences of all other countries
     other_countries_count = (selected_data['eponymy-country'] != target_country).sum()
 
-    # Create a DataFrame with the counts
-    visualization_data = pd.DataFrame({
-        'Country': [target_country, 'Other Countries'],
-        'Count': [target_count, other_countries_count]
-    })
+    visualization_data = pd.DataFrame({'Country': [target_country, 'Other Countries'], 'Count': [target_count, other_countries_count]})
+    plot_pie_chart(visualization_data, 'Country', 'Plants Named After Real People - Country Visualization')
 
-    # Plot a pie chart
-    visualization_data.plot(kind='pie', y='Count', labels=visualization_data['Country'],
-                            autopct='%1.1f%%', colors=['skyblue', 'lightcoral'], startangle=90)
-    
-    plt.title('Plants Named After Real People - Country Visualization')
-    plt.ylabel('')  # Remove y-axis label for better presentation
-    plt.show()  
-
+# Function to plot category visualization
 def plot_category_visualization(target_occupation):
-    # Count occurrences of the target occupation
     target_count = (selected_data['eponymy-occupation'] == target_occupation).sum()
-    
-    # Count occurrences of all other occupations
     other_occupations_counts = selected_data['eponymy-occupation'].value_counts()
+
+    visualization_data = pd.DataFrame({'Occupation': [target_occupation, 'Other Occupations'], 'Count': [target_count, other_occupations_counts.sum()]})
+    plot_pie_chart(visualization_data, 'Occupation', 'Plants Named After Mythical/Fictional Characters - Category Visualization', ylabel='Number of Plants')
     
-     # Create a DataFrame with the counts
-    visualization_data = pd.DataFrame({
-        'Occupation': [target_occupation, 'Other Occupations'],
-        'Count': [target_count, other_occupations_counts.sum()]
-    })
-    
-    # Plot a pie chart
-    visualization_data.plot(kind='pie', y='Count', labels=visualization_data['Occupation'], autopct='%1.1f%%', colors=['skyblue', 'lightcoral'], startangle=90)
-    
-    plt.title('Plants Named After Mythical/Fictional Characters - Category Visualization')
-    plt.xlabel('Category')
-    plt.ylabel('Other creatures')
+# Function to plot a pie chart
+def plot_pie_chart(data, label_col, title, ylabel=''):
+    data.plot(kind='pie', y='Count', labels=data[label_col], autopct='%1.1f%%', colors=['skyblue', 'lightcoral'], startangle=90)
+    plt.title(title)
+    plt.ylabel(ylabel)
     plt.show()
 
+# Display plant information
 result = plant_information(plant_name)
 
+# Plot visualization if there are connected entries
 if not connected_entries.empty:
     plot_visualization()
-# diagram idea: are more plants named after her (needs: eponymy name, yob and yod)
-# diagram idea: if is-real = true => Country visualization
