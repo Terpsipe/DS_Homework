@@ -8,7 +8,10 @@ raw_data = pd.read_csv('WomenPlantGenera_v1-3.csv')
 selected_data = raw_data[['genus-name', 'genus-wfo-status', 'family-name-wfo', 'eponymy-name', 'eponymy-yob', 'eponymy-yod', 'eponymy-occupation', 'eponymy-is-real', 'eponymy-country']]
 
 # Get user input
+print("Example plants: 'Cassandra, Acca'")
 plant_name = input('Please enter the plant name you want to check: ')
+print("----------------------------------")
+
 
 # Filter entries based on user input
 connected_entries = selected_data[selected_data['genus-name']==plant_name]
@@ -16,7 +19,7 @@ connected_entries = selected_data[selected_data['genus-name']==plant_name]
 # Function to display plant information
 def plant_information(plant_name):
     if connected_entries.empty:
-        print(f'The plant name "{plant_name}" does not exist in the selected data.')
+        print(f'The plant name "{plant_name}" does not exist in the selected data.') #Test
     else:
         print(exist_information(plant_name))
        
@@ -90,5 +93,5 @@ def plot_pie_chart(data, label_col, title, ylabel=''):
 result = plant_information(plant_name)
 
 # Plot visualization if there are connected entries
-if not connected_entries.empty:
+if not connected_entries.empty:             #Test
     plot_visualization()
