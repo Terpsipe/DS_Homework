@@ -13,3 +13,5 @@ Data file in Zenodo:
 https://zenodo.org/records/10038070
 Publikation:
 Mering S, Gardiner LM, Knapp S, Lindon H, Leachman S, Ulloa Ulloa C, Vincent S, Vorontsova MS (2023) Creating a multi-linked dynamic dataset: a case study of plant genera named for women. Biodiversity Data Journal 11: e114408. https://doi.org/10.3897/BDJ.11.e114408
+
+<img src="Eponyms_FlowDia.png" alt="Diagram" width="200">
