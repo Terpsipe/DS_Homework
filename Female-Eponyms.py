@@ -19,7 +19,7 @@ connected_entries = selected_data[selected_data['genus-name']==plant_name]
 # Function to display plant information
 def plant_information(plant_name):
     if connected_entries.empty:
-        print(f'The plant name "{plant_name}" does not exist in the selected data.') #Test
+        print(f'The plant name "{plant_name}" does not exist in the selected data.')
     else:
         print(exist_information(plant_name))
        
@@ -93,5 +93,5 @@ def plot_pie_chart(data, label_col, title, ylabel=''):
 result = plant_information(plant_name)
 
 # Plot visualization if there are connected entries
-if not connected_entries.empty:             #Test
+if not connected_entries.empty:
     plot_visualization()
