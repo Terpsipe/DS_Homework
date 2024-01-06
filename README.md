@@ -1,8 +1,7 @@
 # DS_Homework
 
 ## Documentation of the problem
-This is an easy programming-example for the Data-Steward Certificate Course. 
-The project is focusing on names of plant genera that are named after famous women. 
+This is an easy programming-example for the Data-Steward Certificate Course, written by Carolin Rebernig-Hedman and Annerose Tartler. The project is focusing on names of plant genera that are named after famous women. 
 
 Plant names are traditionally given by the person who first described the plant (ditto in the case of higher taxonomic levels such as genera etc.). This practice is often used to honour individuals. This so-called epynomy is widespread in botany. The higher the taxonomic level, the more significant the naming. Women are not only in the minority in the scientific field in natural sciences, they are also significantly less likely to be used as a name model for naming new taxa. 
 An international initiative of female scientists wanted to use a dataset of flowering plants to show how many and which women in the botanical field have been honoured to date for their contributions to science through epynomy. 
