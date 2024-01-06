@@ -22,11 +22,6 @@ Furthermore, the programme filters the results according to whether the person w
 In the case of a real person, the result includes the name, occupation, country of origin, date of birth and date of death. A plot is drawn based on the country of origin information.
 
 
-Data file in Zenodo:
-https://zenodo.org/records/10038070
-Publikation:
-Mering S, Gardiner LM, Knapp S, Lindon H, Leachman S, Ulloa Ulloa C, Vincent S, Vorontsova MS (2023) Creating a multi-linked dynamic dataset: a case study of plant genera named for women. Biodiversity Data Journal 11: e114408
-
 <!---->
 
 ## Documentation of the design
