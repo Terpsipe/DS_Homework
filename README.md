@@ -1,7 +1,10 @@
 # DS_Homework
 
 ## Documentation of the problem
-This is an easy programming-example for the Data-Steward Certificate Course. By providing a plant genus name as input, users of our program can research whether the plant was named after a famous woman.
+This is an easy programming-example for the Data-Steward Certificate Course. 
+The project is focusing on names of plant genera that are named after famous women. 
+
+By providing a plant genus name as input, users of our program can research whether the plant was named after a famous woman.
 <!---->
 
 ## Documentation of the design
