@@ -4,22 +4,23 @@
 This is an easy programming-example for the Data-Steward Certificate Course. 
 The project is focusing on names of plant genera that are named after famous women. 
 
-Pflanzennamen werden traditionell von jener Person vergeben, die die Pflanze zuerst beschrieben hat (dito im Fall von höherliegenden taxonomischen Ebenen wie Gattungen usw.). Nicht selten wird diese Praxis dazu verwendet, um Personen zu ehren. Diese sogenannte Epynomy ist in der Botanik weit verbreitet. Je höher die taxonomische Ebene desto bedeutender die Namensgebung. Frauen sind nicht nur im wissenschaftlichen Bereich in den Naturwissenschaften in der Minderzahl, sie werden auch bedeutend seltener als Namensvorbild zur Benennung neuer Taxa herangezogen. 
-Eine internationale Inititaive von Wissenschaftlerinnen wollte anhand eines Datensets von Bluetenpflazen aufzeigen, wieviel und welche Frauen im botanischen Bereich fuer ihre Beiträge zur Wissenschaft durch Epynomy bis dato geehrt wurden. 
+Plant names are traditionally given by the person who first described the plant (ditto in the case of higher taxonomic levels such as genera etc.). This practice is often used to honour individuals. This so-called epynomy is widespread in botany. The higher the taxonomic level, the more significant the naming. Women are not only in the minority in the scientific field in natural sciences, they are also significantly less likely to be used as a name model for naming new taxa. 
+An international initiative of female scientists wanted to use a dataset of flowering plants to show how many and which women in the botanical field have been honoured to date for their contributions to science through epynomy. 
 
-In unserem Projekt verwenden wir dieses Datenset (WomenPlantGenera_v1-3.csv). Das Ziel ist es, es interessierten Benutzerinnen zu ermöglichen herauszufinden, ob eine gesuchte Pflanzengattung nach einer Frau benannt wurde, und wenn ja, wer diese Frau war.
-Die Daten enthalten unter anderem:
--	Genus name (alle Pflanzennamen am Genus level)
--	Epynomy (Name der Frau)
--	Epynomy occupation 
--	Epynomy is mythical 
--	Epynomy country (positiv, wenn es sich bei der Person um eine reale Person handelt)
--	Year of birth
--	Year of death
+In our project we use this dataset (WomenPlantGenera_v1-3.csv). The aim is to enable interested users to find out whether a plant genus of interest was named after a woman, and if so, who that woman was.
+The data contains, among other things:
+- Genus name (all plant names at genus level)
+- Epynomy (name of the woman)
+- Epynomy occupation 
+- Epynomy is mythical 
+- Epynomy country (positive if the person is a real person)
+- Year of birth
+- Year of death
 
-Das Program lädt die Daten. Der user schreibt einen Input (Pflanzennamen) und das Program sucht zuerst nach dem gesuchten Namen in den Daten. Wenn der Name vorhanden ist bekommt die Anwenderin eine positive Rueckmeldung in der die Information ueber die erste entsprechende Pflanzengattung in der Liste ausgegeben wird.
-Des weiteren filtert das Program die Ergebnisse je nachdem ob es sich um eine reale Person handelt oder nicht. War/ist die Person nicht real besteht die Information aus dem Namen und dem Beruf (in dem Fall mythologische Figur o.Ä.). Ein Plot basierend auf dem Ergebnis wird ausgegeben. 
-Im Falle einer realen Person beinhaltet das Ergebnis den Namen, den Beruf, das Herkunftsland, das Geburts- und Sterbedatum. Ein Plot wird gezeichnet basierend auf der Infromation zum Herkunftsland.
+The programme loads the data. The user writes an input (plant genus name) and the programme first searches for the name in the data. If the name is available, the user receives a positive response, which displays the available information about the first corresponding plant genus in the list.
+Furthermore, the programme filters the results according to whether the person was/is real or not. If the person was/is not real, the information consists of the name and occupation (in this case mythological figure or similar). A plot based on the result is the second output. 
+In the case of a real person, the result includes the name, occupation, country of origin, date of birth and date of death. A plot is drawn based on the country of origin information.
+
 
 Data file in Zenodo:
 https://zenodo.org/records/10038070
